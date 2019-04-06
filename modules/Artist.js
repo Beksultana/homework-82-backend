@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 const ArtistSchema = new Schema({
-   name: {
+    executor: {
        type: String, required: true
    },
     image: {
@@ -10,7 +10,7 @@ const ArtistSchema = new Schema({
     },
     description: {
        type: String
-    }
+    },
 });
 const Artist = mongoose.model('Artist', ArtistSchema);
 module.exports = Artist;
