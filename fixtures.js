@@ -15,8 +15,9 @@ const run = async () => {
     }
 
     const artists = await Artist.create(
-        {executor: 'Ketsa', description: "It's Roxy"},
-        {executor: 'Daniel Birch', description: "Rising Bells"},
+        {artists: 'Ketsa', description: "It's Roxy"},
+        {artists: 'Daniel Birch', description: "Rising Bells"},
+        {artists: 'Ketsa', description: "love"},
     );
 
     const albums = await Album.create(
@@ -32,11 +33,18 @@ const run = async () => {
             artists: artists[1]._id,
             image: 'daniel.png'
         },
+        {
+            albumName: 'Love you',
+            year: "2016",
+            artists: artists[0]._id,
+            image: 'ketsa.png'
+        },
     );
 
     await Track.create(
         {trackName: 'Its Roxy', albums: albums[0]._id, duration: '05:20'},
         {trackName: 'Rising Bells', albums: albums[1]._id, duration: '03:20'},
+        {trackName: 'Love', albums: albums[0]._id, duration: '04:20'},
     );
     await  connection.close()
 };

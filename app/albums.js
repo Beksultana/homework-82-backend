@@ -17,9 +17,22 @@ const storage = multer.diskStorage({
 const upload = multer({storage});
 
 router.get('/', (req, res) => {
-    AlbumSchema.find().populate('artists')
+    if (req.query.artists) {
+        AlbumSchema.find({artists: req.query.artists})
+            .then(result => res.send(result))
+            .catch(() => res.sendStatus(500))
+    } else {
+        AlbumSchema.find()
+            .then(result => res.send(result))
+            .catch(() => res.sendStatus(500))
+    }
+});
+
+router.get('/:artistId', (req, res) => {
+    AlbumSchema.findOne({artists: req.params.artistId}).populate('artists')
         .then(result => res.send(result))
         .catch(() => res.sendStatus(500))
+
 });
 
 router.post('/', (req, res) => {
@@ -30,9 +43,9 @@ router.post('/', (req, res) => {
         albumData.image = req.file.filename;
     }
 
-    const Artist = new AlbumSchema(albumData);
+    const Album = new AlbumSchema(albumData);
 
-    Artist.save()
+    Album.save()
         .then(result => res.send(result))
         .catch(error => res.status(400).send(error))
 });

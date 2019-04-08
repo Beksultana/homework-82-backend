@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 const ArtistSchema = new Schema({
-    executor: {
+    artists: {
        type: String, required: true
    },
     image: {

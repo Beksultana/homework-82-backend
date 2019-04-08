@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
 const upload = multer({storage});
 
 router.get('/', (req, res) => {
-   ArtistSchema.find()
+    ArtistSchema.find()
        .then(result => res.send(result))
        .catch(() => res.sendStatus(500))
 });
