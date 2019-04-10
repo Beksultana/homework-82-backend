@@ -6,5 +6,8 @@ module.exports = {
     rootPath,
     uploadPath: path.join(rootPath, 'public/uploads'),
     artistsDb: 'mongodb://localhost/lastFM',
-    mongooseOptions: {useNewUrlParser: true}
+    mongooseOptions: {
+        useCreateIndex: true,
+        useNewUrlParser: true
+    }
 };
