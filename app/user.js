@@ -2,12 +2,17 @@ const express = require('express');
 const router = express.Router();
 const UserSchema = require('../modules/User');
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     const user = new UserSchema(req.body);
 
-    user.save()
-        .then(result => res.send(result))
-        .catch(error => res.status(400).send(error))
+    user.generateToken();
+
+    try {
+        await user.save();
+        return res.send({token: user.token})
+    } catch (error) {
+        return res.status(400).send(error)
+    }
 });
 
 router.post('/sessions', async (req, res) => {
@@ -22,8 +27,9 @@ router.post('/sessions', async (req, res) => {
     if (!isMatch){
         return res.status(400).send({error: "Username/password incorrect!" })
     }
-
-    res.send({message: "Username and password correct!"})
+    user.generateToken();
+    await user.save();
+    res.send({token: user.token})
 });
 
 module.exports = router;

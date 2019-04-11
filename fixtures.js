@@ -4,6 +4,7 @@ const config = require('./config');
 const Artist = require('./modules/Artist');
 const Album = require('./modules/Album');
 const Track = require('./modules/Track');
+const TrackHistory = require('./modules/TrackHistory');
 
 const run = async () => {
     await mongoose.connect(config.artistsDb, config.mongooseOptions);
@@ -45,6 +46,10 @@ const run = async () => {
         {trackName: 'Its Roxy', albums: albums[0]._id, duration: '05:20'},
         {trackName: 'Rising Bells', albums: albums[1]._id, duration: '03:20'},
         {trackName: 'Love', albums: albums[0]._id, duration: '04:20'},
+    );
+
+    await TrackHistory.create(
+        {trackName: 'Its Roxy', albums: albums[0]._id, duration: now()},
     );
     await  connection.close()
 };
