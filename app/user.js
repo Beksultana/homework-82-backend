@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const auth = require('../middleware/auth');
 const UserSchema = require('../modules/User');
 
 router.post('/', async (req, res) => {
@@ -30,6 +31,13 @@ router.post('/sessions', async (req, res) => {
     user.generateToken();
     await user.save();
     res.send({token: user.token})
+
+});
+
+router.get('/secret', auth,(req, res) => {
+    console.log(req.user._id);
+
+    res.send({message: "OK"});
 });
 
 module.exports = router;
